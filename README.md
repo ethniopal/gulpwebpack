@@ -38,7 +38,7 @@ npm run cleanSrc
 
 Pour le nettoyage des fichiers Dist
 ```
-npm run cleanDist
+npm run clean
 ```
 
 Permet de redimensionner les iamges aux besoins selon les dimensions indiquées dans le fichier config
