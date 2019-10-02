@@ -39,8 +39,6 @@ function generateSrcDirectory() {
         .pipe(dest( basePath + distDir ))
         .pipe(dest( basePath +'docs/' ))
         .pipe(dest( basePath +'templates/'))
-        .pipe(gulpif(config.type ==='wp' , dest(config.plugins.src)))
-        .pipe(gulpif(config.type ==='wp' , dest(config.muplugins.src)))
 }
 
 
