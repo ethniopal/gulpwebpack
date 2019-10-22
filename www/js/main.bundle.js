@@ -112,14 +112,19 @@ init();
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+/**
+ * Script permettant de lazyload les images
+ * Utiliser l'attribut data-lazy="" sur les img au lieu de l'attribut src=""
+ * @type {NodeListOf<HTMLElementTagNameMap[string]>}
+ */
+// <img src="img/pig.jpeg">
+// <img data-lazy="img/cow.jpeg">
 var targets = document.querySelectorAll('img');
 
 var lazyLoad = function lazyLoad(target) {
   var io = new IntersectionObserver(function (entries, observer) {
     console.log(entries);
     entries.forEach(function (entry) {
-      console.log('😍');
-
       if (entry.isIntersecting) {
         var img = entry.target;
         var src = img.getAttribute('data-lazy');

@@ -44,7 +44,7 @@ function styles() {
         .pipe(sass({outputStyle: "expanded"})).on("error", sass.logError)
         .pipe(mmq({log: true})) // Merge Media Queries only for .min.css version.
 
-        .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(postcss([autoprefixer({grid:true}), cssnano()]))
         .pipe(sourcemaps.write('./css/sourcemaps'))
 
         .pipe(dest( config.css.dist))
