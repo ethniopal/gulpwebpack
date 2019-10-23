@@ -1,6 +1,6 @@
 import {basePath, srcDir, distDir, config as configData} from "./config.js";
 
-import path    from 'path'
+import path from 'path'
 import webpack from 'webpack'
 import process from 'process'
 
@@ -14,14 +14,14 @@ let config = {
 
     output: {
         filename: js.filename,
-        path:  path.resolve(__dirname, '.' + js.dist),
+        path: path.resolve(__dirname, '.' + js.dist),
         chunkFilename: "vendors.bundle.js"
     },
 
     context: path.resolve(__dirname, '.' + js.src),
 
     devtool: false,
-    plugins:  [
+    plugins: [
         //Inclus les sources maps des fichiers bundler
         new webpack.SourceMapDevToolPlugin({
             filename: '[file].map',
@@ -36,19 +36,19 @@ let config = {
         })
     ],
 
-    optimization:{
-      splitChunks: { //Permets d'importer des librairies nodes si utilisé dans le projet afin d'éviter de les avoir dans plus d'un bundle
-          cacheGroups: {
-              node_vendors: {
-                  test: /[\\/]node_modules|libs[\\/]/,
-                  chunks: 'all',
-                  priority: 1,
-              },
-          },
-          chunks (chunk) {
-              return chunk.name
-          }
-      }
+    optimization: {
+        splitChunks: { //Permets d'importer des librairies nodes si utilisé dans le projet afin d'éviter de les avoir dans plus d'un bundle
+            cacheGroups: {
+                node_vendors: {
+                    test: /[\\/]node_modules|libs[\\/]/,
+                    chunks: 'all',
+                    priority: 1,
+                },
+            },
+            chunks(chunk) {
+                return chunk.name
+            }
+        }
     },
 
     module: {
@@ -59,7 +59,7 @@ let config = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        cacheDirectory:true,
+                        cacheDirectory: true,
                         presets: ['@babel/preset-env']
                     }
                 }
@@ -70,7 +70,7 @@ let config = {
 }
 
 //Si en production
-if(isProduction){
+if (isProduction) {
     config.plugins.push(new webpack.optimize.UglifyJsPlugin());
 }
 
@@ -78,12 +78,12 @@ function scripts() {
 
     return new Promise(resolve => webpack(config, (err, stats) => {
 
-        if(err) console.log('Webpack', err)
+        if (err) console.log('Webpack', err)
 
-        console.log(stats.toString({ /* stats options */ }))
+        console.log(stats.toString({ /* stats options */}))
 
         resolve()
     }))
 }
 
-module.exports = { config, scripts }
+module.exports = {config, scripts}

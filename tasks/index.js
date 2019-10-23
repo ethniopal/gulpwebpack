@@ -36,7 +36,7 @@ function watchFiles () {
 
 // Les différentes tâches du gulp
 export const init  = series(cleanDist, generateSrcDirectory, wamp, createDatabase/*, downloadFiles  */);
-export const dev   = series(parallel(styles, copyFiles, optimiseImages, optimiseImagesWp, scripts), parallel(watchFiles, server));
+export const dev   = series(parallel(styles, copyFiles, scripts), parallel(watchFiles, server));
 export const build = series( cleanDist, parallel(styles, copyFiles, copyPlugins, optimiseImages, optimiseImagesWp), scripts, uploadFTP, backupBD );
 
 //Les tâches individuel
