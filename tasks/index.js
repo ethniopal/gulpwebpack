@@ -6,7 +6,7 @@ import { server , reload }  from './server';
 import { cleanInit, cleanDist, generateSrcDirectory }  from './clean';
 import { optimiseImages, optimiseImagesWp , resizeImage }  from './images';
 import { styles }  from './css';
-import { copy as copyFiles, copyPlugins }  from './copy';
+import { copy as copyFiles }  from './copy';
 import { downloadFiles }  from './download';
 import { uploadFTP, backupBD }  from './deploy';
 import { wamp }  from './wamp';
@@ -27,16 +27,16 @@ function watchFiles () {
     watch(js.src + '/**/*.js').on('change', series(scripts, reload));
 
     //pour wordpress
-    if(type=='wp'){
-        watch([
-            plugins.src + '/**/*',
-            muplugins.src + '/**/*']).on('change', series(copyPlugins));
-    }
+    // if(type=='wp'){
+    //     watch([
+    //         plugins.src + '/**/*',
+    //         muplugins.src + '/**/*']).on('change', series(copyPlugins));
+    // }
 }
 
 // Les différentes tâches du gulp
 export const init  = series(cleanDist, generateSrcDirectory, wamp, createDatabase/*, downloadFiles  */);
-export const dev   = series(parallel(styles, copyFiles, copyPlugins, optimiseImages, optimiseImagesWp, scripts), parallel(watchFiles, server));
+export const dev   = series(parallel(styles, copyFiles, optimiseImages, optimiseImagesWp, scripts), parallel(watchFiles, server));
 export const build = series( cleanDist, parallel(styles, copyFiles, copyPlugins, optimiseImages, optimiseImagesWp), scripts, uploadFTP, backupBD );
 
 //Les tâches individuel
