@@ -5,7 +5,7 @@ import { scripts } from './webpack';
 import { server , reload }  from './server';
 import { cleanInit, cleanDist, generateSrcDirectory }  from './clean';
 import { optimiseImages, optimiseImagesWp , resizeImage }  from './images';
-import { styles }  from './css';
+import { styles, stylesVendor }  from './css';
 import { copy as copyFiles }  from './copy';
 import { downloadFiles }  from './download';
 import { uploadFTP, backupBD }  from './deploy';
@@ -21,7 +21,7 @@ import createDatabase from './bd';
 function watchFiles () {
     const {css, js, theme, img, plugins, muplugins, type} = config;
 
-    watch(css.src + '/**/*.scss', styles);
+    watch(css.src + '/**/*.scss', parallel(styles, stylesVendor));
     watch(theme.src + '/**/*').on('change', series(copyFiles, reload));
     watch(img.src + '/**/*').on('change', series(optimiseImages, reload));
     watch(js.src + '/**/*.js').on('change', series(scripts, reload));
@@ -36,8 +36,8 @@ function watchFiles () {
 
 // Les différentes tâches du gulp
 export const init  = series(cleanDist, generateSrcDirectory, wamp, createDatabase/*, downloadFiles  */);
-export const dev   = series(parallel(styles, copyFiles, scripts), parallel(watchFiles, server));
-export const build = series( cleanDist, parallel(styles, copyFiles, copyPlugins, optimiseImages, optimiseImagesWp), scripts, uploadFTP, backupBD );
+export const dev   = series(parallel(styles, stylesVendor, copyFiles, scripts), parallel(watchFiles, server));
+export const build = series( cleanDist, parallel(styles, stylesVendor, copyFiles, optimiseImages, optimiseImagesWp), scripts, uploadFTP, backupBD );
 
 //Les tâches individuel
 export const clean   = series(cleanDist);
@@ -45,7 +45,7 @@ export const cleanSrc   = series(cleanInit);
 export const resize  = series(resizeImage);
 export const js = series(scripts);
 export const css  = series(styles);
-export const copy  = series(copyFiles, copyPlugins);
+export const copy  = series(copyFiles);
 export const sql  = series(createDatabase);
 export const vhost  = series(wamp);
 
