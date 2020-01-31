@@ -4,6 +4,8 @@ import path from 'path'
 import webpack from 'webpack'
 import process from 'process'
 
+// import autoprefixer from "autoprefixer"
+
 const isProduction = (process.env.NODE_ENV === 'production')
 const {js} = configData;
 
@@ -16,6 +18,11 @@ let config = {
         filename: js.filename,
         path: path.resolve(__dirname, '.' + js.dist),
         chunkFilename: "vendors.bundle.js"
+    },
+
+    externals: {
+        jquery: 'jQuery',
+        $: 'jQuery'
     },
 
     context: path.resolve(__dirname, '.' + js.src),
@@ -33,7 +40,15 @@ let config = {
             lineToLine: false,
             noSources: false,
             namespace: ''
-        })
+        }),
+        // new webpack.LoaderOptionsPlugin({
+        //     options: {
+        //         postcss: [
+        //             autoprefixer()
+        //         ]
+        //     }
+        // }),
+        // "autoprefixer": {}
     ],
 
     optimization: {
@@ -63,7 +78,26 @@ let config = {
                         presets: ['@babel/preset-env']
                     }
                 }
-            }
+            },
+            // {
+            //     test: /\.css$/,
+            //     exclude: /(node_modules|css|scss)/,
+            //     use: [
+            //         MiniCssExtractPlugin.loader,
+            //         "css-loader",
+            //         "postcss-loader"
+            //     ]
+            // },
+            // {
+            //     test: /\.scss$/,
+            //     exclude: /(node_modules|scss|css)/,
+            //     use: [
+            //         MiniCssExtractPlugin.loader,
+            //         "css-loader",
+            //         "postcss-loader",
+            //         "sass-loader"
+            //     ]
+            // }
         ]
     }
 

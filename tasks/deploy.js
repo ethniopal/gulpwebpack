@@ -39,6 +39,7 @@ function uploadFTP () {
  */
 function backupBD (){
 // dump the result straight to a file
+
     mysqldump({
         connection: {
             host: connDB.host,

@@ -3,7 +3,7 @@ import {config as configData, config} from "./config";
 
 import { scripts } from './webpack';
 import { server , reload }  from './server';
-import { cleanInit, cleanDist, generateSrcDirectory }  from './clean';
+import { cleanInit, cleanDist, generateSrcDirectory , clearCache }  from './clean';
 import { optimiseImages, optimiseImagesWp , resizeImage }  from './images';
 import { styles, stylesVendor }  from './css';
 import { copy as copyFiles }  from './copy';
@@ -26,6 +26,7 @@ function watchFiles () {
     watch(img.src + '/**/*').on('change', series(optimiseImages, reload));
     watch(js.src + '/**/*.js').on('change', series(scripts, reload));
 
+    // watch('config.**/*', clearCache);
     //pour wordpress
     // if(type=='wp'){
     //     watch([

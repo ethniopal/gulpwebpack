@@ -4,7 +4,7 @@ const distDir = 'www';
 
 const config = {
     name: 'theme2019', //Nom du thème/projet (sans espace ni de caractère accentué)
-    proxy: 'http://dev.gulp', //Url local, laisser vide si désire l'utiliser sans sous-domaine ex.: http://dev.test/
+    proxy: '', //Url local, laisser vide si désire l'utiliser sans sous-domaine ex.: http://dev.test/
     type: '',  //Valeur possible : wp, laravel, html, react
     server: 'wamp', //création automatique des virtuals hosts, selon le proxy et le chemin public, il faudra indiqué le chemin d'installation plus bas, laisser vide si pas sur wamp
     connDB: {

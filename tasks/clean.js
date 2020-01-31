@@ -1,6 +1,7 @@
 import {basePath, srcDir, distDir, config} from "./config.js";
 import {src, dest} from 'gulp';
-import del from 'del'
+import del from 'del';
+import cache from 'gulp-cache';
 
 
 /**
@@ -23,7 +24,13 @@ function cleanInit() {
     );
 }
 
-
+/**
+ * Clear la cache
+ */
+function clearCache(done) {
+    cache.clearAll();
+    done();
+}
 
 /**
  * Génère les répertoires à l'intérieurs de src
@@ -45,5 +52,6 @@ function generateSrcDirectory() {
 export {
     generateSrcDirectory,
     cleanDist,
-    cleanInit
+    cleanInit,
+    clearCache
 }
